@@ -81,27 +81,60 @@ These exercises will reiterate what you learned in the "Expanding the data wrang
   1. Summarize the `garden_harvest` data to find the total harvest weight in pounds for each vegetable and day of week. Display the results so that the vegetables are rows but the days of the week are columns.
 
 ```{r}
-
+garden_harvest %>% 
+  mutate(week_day = wday(date, label = TRUE)) %>% 
+  group_by(vegetable, week_day) %>% 
+  summarise(total_weight_lbs = sum(weight) * 0.00220462) %>% 
+  pivot_wider(id_cols = vegetable,
+              names_from = week_day, 
+              values_from = total_weight_lbs)
 ```
 
   2. Summarize the `garden_harvest` data to find the total harvest in pound for each vegetable variety and then try adding the `plot` variable from the `plant_date_loc` table. This will not turn out perfectly. What is the problem? How might you fix it?
 
 ```{r}
-
+garden_harvest %>% 
+  group_by(variety) %>% 
+  summarise(total_weight_lbs = sum(weight) * 0.00220462) %>% 
+  full_join(plant_date_loc, 
+            by = "variety")
 ```
 
+**Problem:** There isn't an exact match up and number of varieties in each data set, so there are a couple varieties that have either missing values for total weight or plot. This could be solved by figuring out why some of the varieties are listed more than once, and combining them. Another problem is that even though some varieties are planted in more than one location, the total weight is not separated by plot. This could be solved by grouping each variety by plot and then summing up the total weight. 
+
   3. I would like to understand how much money I "saved" by gardening, for each vegetable type. Describe how I could use the `garden_harvest` and `supply_cost` datasets, along with data from somewhere like [this](https://products.wholefoodsmarket.com/search?sort=relevance&store=10542) to answer this question. You can answer this in words, referencing various join functions. You don't need R code but could provide some if it's helpful.
+  
+  
+  - join garden_harvest and supply_cost by vegetable and variety
+  - group by vegetable and variety
+  - calculate total weight in pounds and cost per variety of vegetable in the garden 
+  - calculate the total cost of the garden by summing up all the prices/expenses
+  - full join the combined data with the whole foods data by vegetable and variety
+  - multiply each variety's weight (from the garden_harvest data) in pounds by the Whole Foods price per pound
+  - calculate total cost of shopping at whole foods by summing up the prices from the previous step
+  - subtract the total cost of growing the garden from the total cost of shopping at whole foods to find out how much money was saved
 
   4. Subset the data to tomatoes. Reorder the tomato varieties from smallest to largest first harvest date. Create a barplot of total harvest in pounds for each variety, in the new order.
 
 ```{r}
-
+garden_harvest %>%
+  filter(vegetable == "tomatoes") %>%
+  group_by(variety) %>%
+  mutate(first_harvest_date = min(date),
+         total_weight_lbs = sum(weight) * 0.00220462) %>%
+  ggplot(aes(x = total_weight_lbs, y = fct_reorder(variety, first_harvest_date, .desc = TRUE))) +
+  geom_col() +
+  labs(y = "VAriety", x = "Weight", title = "Total Tomato Harvests", subtitle = "From Earliest to Latest First Harvest Date")
 ```
 
   5. In the `garden_harvest` data, create two new variables: one that makes the varieties lowercase and another that finds the length of the variety name. Arrange the data by vegetable and length of variety name (smallest to largest), with one row for each vegetable variety. HINT: use `str_to_lower()`, `str_length()`, and `distinct()`.
   
 ```{r}
-
+garden_harvest %>% 
+  mutate(lowercase_variety = str_to_lower(variety), 
+         variety_length = str_length(variety)) %>% 
+  group_by(variety_length, vegetable, variety) %>% 
+  summarise()
 ```
 
   6. In the `garden_harvest` data, find all distinct vegetable varieties that have "er" or "ar" in their name. HINT: `str_detect()` with an "or" statement (use the | for "or") and `distinct()`.
