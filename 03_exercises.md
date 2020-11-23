@@ -16,42 +16,8 @@ output:
 
 ```r
 library(tidyverse)     # for graphing and data cleaning
-```
-
-```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
-```
-
-```
-## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.0
-```
-
-```
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 library(googlesheets4) # for reading googlesheet data
 library(lubridate)     # for date manipulation
-```
-
-```
-## 
-## Attaching package: 'lubridate'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     date, intersect, setdiff, union
-```
-
-```r
 library(ggthemes)      # for even more plotting themes
 library(geofacet)      # for special faceting with US map layout
 gs4_deauth()           # To not have to authorize each time you knit.
@@ -63,59 +29,18 @@ theme_set(theme_minimal())       # My favorite ggplot() theme :)
 #Lisa's garden data
 garden_harvest <- read_sheet("https://docs.google.com/spreadsheets/d/1DekSazCzKqPS2jnGhKue7tLxRU3GVL1oxi-4bEM5IWw/edit?usp=sharing") %>% 
   mutate(date = ymd(date))
-```
 
-```
-## Reading from "2020_harvest"
-```
-
-```
-## Range "Sheet1"
-```
-
-```r
 # Seeds/plants (and other garden supply) costs
 supply_costs <- read_sheet("https://docs.google.com/spreadsheets/d/1dPVHwZgR9BxpigbHLnA0U99TtVHHQtUzNB9UR0wvb7o/edit?usp=sharing",
   col_types = "ccccnn")
-```
 
-```
-## Reading from "2020_seeds"
-## Range "Sheet1"
-```
-
-```r
 # Planting dates and locations
 plant_date_loc <- read_sheet("https://docs.google.com/spreadsheets/d/11YH0NtXQTncQbUse5wOsTtLSKAiNogjUA21jnX5Pnl4/edit?usp=sharing",
   col_types = "cccnDlc")%>% 
   mutate(date = ymd(date))
-```
 
-```
-## Reading from "seeds_planted"
-## Range "Sheet1"
-```
-
-```
-## Warning in .Primitive("as.double")(x, ...): NAs introduced by coercion
-```
-
-```r
 # Tidy Tuesday data
 kids <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-15/kids.csv')
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   state = col_character(),
-##   variable = col_character(),
-##   year = col_double(),
-##   raw = col_double(),
-##   inf_adj = col_double(),
-##   inf_adj_perchild = col_double()
-## )
 ```
 
 ## Setting up on GitHub!
@@ -166,10 +91,6 @@ garden_harvest %>%
               values_from = total_weight_lbs)
 ```
 
-```
-## `summarise()` regrouping output by 'vegetable' (override with `.groups` argument)
-```
-
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["vegetable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sat"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Tue"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Thu"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Fri"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Sun"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Wed"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"apple","2":"0.34392072","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"asparagus","2":"0.04409240","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"basil","2":"0.41005932","3":"0.0661386","4":"0.11023100","5":"0.02645544","6":"0.46737944","7":"NA","8":"NA"},{"1":"beans","2":"4.70906832","3":"6.5080382","4":"4.38719380","5":"3.39291018","6":"1.52559704","7":"1.91361016","8":"4.08295624"},{"1":"beets","2":"0.37919464","3":"0.6724091","4":"0.15873264","5":"11.89172028","6":"0.02425082","7":"0.32187452","8":"0.18298346"},{"1":"broccoli","2":"NA","3":"0.8201186","4":"NA","5":"NA","6":"0.16534650","7":"1.25883802","8":"0.70768302"},{"1":"carrots","2":"2.33028334","3":"0.8708249","4":"0.35273920","5":"2.67420406","6":"2.13848140","7":"2.93655384","8":"5.56225626"},{"1":"chives","2":"NA","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"0.01763696"},{"1":"cilantro","2":"0.03747854","3":"NA","4":"0.00440924","5":"NA","6":"0.07275246","7":"NA","8":"NA"},{"1":"corn","2":"1.31615814","3":"0.7583893","4":"0.72752460","5":"NA","6":"3.44802568","7":"1.45725382","8":"5.30211110"},{"1":"cucumbers","2":"9.64080326","3":"4.7752069","4":"10.04645334","5":"3.30693000","6":"7.42956940","7":"3.10410496","8":"5.30652034"},{"1":"edamame","2":"4.68922674","3":"NA","4":"1.40213832","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"hot peppers","2":"NA","3":"1.2588380","4":"0.14109568","5":"NA","6":"NA","7":"NA","8":"0.06834322"},{"1":"jalapeño","2":"1.50796008","3":"5.5534378","4":"0.54895038","5":"0.22487124","6":"1.29411194","7":"0.26234978","8":"0.48060716"},{"1":"kale","2":"1.49032312","3":"2.0679336","4":"0.28219136","5":"0.27998674","6":"0.38139926","7":"0.82673250","8":"0.61729360"},{"1":"kohlrabi","2":"NA","3":"NA","4":"NA","5":"0.42108242","6":"NA","7":"NA","8":"NA"},{"1":"lettuce","2":"1.31615814","3":"2.4581513","4":"0.91712192","5":"2.45153744","6":"1.80117454","7":"1.46607230","8":"1.18608556"},{"1":"onions","2":"1.91361016","3":"0.5092672","4":"0.70768302","5":"0.60186126","6":"0.07275246","7":"0.26014516","8":"NA"},{"1":"peas","2":"2.85277828","3":"4.6341112","4":"2.06793356","5":"3.39731942","6":"0.93696350","7":"2.05691046","8":"1.08026380"},{"1":"peppers","2":"1.38229674","3":"2.5264945","4":"1.44402610","5":"0.70988764","6":"0.33510224","7":"0.50265336","8":"2.44271896"},{"1":"potatoes","2":"2.80207202","3":"0.9700328","4":"NA","5":"11.85203712","6":"3.74124014","7":"NA","8":"4.57017726"},{"1":"pumpkins","2":"92.68883866","3":"30.1195184","4":"31.85675900","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"radish","2":"0.23148510","3":"0.1962112","4":"0.09479866","5":"0.14770954","6":"0.19400656","7":"0.08157094","8":"NA"},{"1":"raspberries","2":"0.53351804","3":"0.1300726","4":"0.33510224","5":"0.28880522","6":"0.57099658","7":"NA","8":"NA"},{"1":"rutabaga","2":"6.89825598","3":"NA","4":"NA","5":"NA","6":"3.57809826","7":"19.26396956","8":"NA"},{"1":"spinach","2":"0.26014516","3":"0.1477095","4":"0.49603950","5":"0.23368972","6":"0.19621118","7":"0.48722102","8":"0.21384814"},{"1":"squash","2":"56.22221924","3":"24.3345956","4":"18.46810174","5":"NA","6":"NA","7":"NA","8":"NA"},{"1":"strawberries","2":"0.16975574","3":"0.4784025","4":"NA","5":"0.08818480","6":"0.48722102","7":"0.08157094","8":"NA"},{"1":"Swiss chard","2":"0.73413846","3":"1.0736499","4":"0.07054784","5":"2.23107544","6":"0.61729360","7":"1.24781492","8":"0.90830344"},{"1":"tomatoes","2":"35.12621046","3":"11.4926841","4":"48.75076206","5":"34.51773534","6":"85.07628580","7":"75.60964752","8":"58.26590198"},{"1":"zucchini","2":"3.41495638","3":"12.1959578","4":"16.46851140","5":"34.63017096","6":"18.72163304","7":"12.23564100","8":"2.04147812"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -185,10 +106,6 @@ garden_harvest %>%
   summarise(total_weight_lbs = sum(weight) * 0.00220462) %>% 
   full_join(plant_date_loc, 
             by = "variety")
-```
-
-```
-## `summarise()` ungrouping output (override with `.groups` argument)
 ```
 
 <div data-pagedtable="false">
@@ -236,10 +153,6 @@ garden_harvest %>%
          variety_length = str_length(variety)) %>% 
   group_by(variety_length, vegetable, variety) %>% 
   summarise()
-```
-
-```
-## `summarise()` regrouping output by 'variety_length', 'vegetable' (override with `.groups` argument)
 ```
 
 <div data-pagedtable="false">
@@ -291,18 +204,6 @@ data_site <-
   "https://www.macalester.edu/~dshuman1/data/112/2014-Q4-Trips-History-Data.rds" 
 Trips <- readRDS(gzcon(url(data_site)))
 Stations<-read_csv("http://www.macalester.edu/~dshuman1/data/112/DC-Stations.csv")
-```
-
-```
-## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   name = col_character(),
-##   lat = col_double(),
-##   long = col_double(),
-##   nbBikes = col_double(),
-##   nbEmptyDocks = col_double()
-## )
 ```
 
 **NOTE:** The `Trips` data table is a random subset of 10,000 trips from the full quarterly data. Start with this small data table to develop your analysis commands. **When you have this working well, you should access the full data set of more than 600,000 events by removing `-Small` from the name of the `data_site`.**
@@ -444,13 +345,7 @@ departure_by_station <- Trips %>%
   group_by(lat, long) %>% 
   summarise(n = n(),
             prop_casual = mean(client == "Casual"))
-```
 
-```
-## `summarise()` regrouping output by 'lat' (override with `.groups` argument)
-```
-
-```r
 departure_by_station
 ```
 
@@ -468,14 +363,6 @@ ggplot(departure_by_station) +
              aplha = .8, shape = 17) + 
   scale_color_viridis_c() + 
   labs(title = "Number of Departures by Station", x = "Longitude", y = "Latitude", color = "Number of Departures")
-```
-
-```
-## Warning: Ignoring unknown parameters: aplha
-```
-
-```
-## Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
 ![](03_exercises_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
@@ -496,14 +383,6 @@ Trips %>%
   labs(title = "Percentage of Casual Clients per Station", x = "Longitude", y = "Latitude", color = "Percent")
 ```
 
-```
-## `summarise()` regrouping output by 'lat', 'long' (override with `.groups` argument)
-```
-
-```
-## Warning: Removed 1 rows containing missing values (geom_point).
-```
-
 ![](03_exercises_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
   
 ### Spatiotemporal patterns
@@ -518,13 +397,7 @@ station_date_departures <- Trips %>%
   summarise(n = n()) %>% 
   arrange(desc(n)) %>% 
   head(n = 10)
-```
 
-```
-## `summarise()` regrouping output by 'sstation' (override with `.groups` argument)
-```
-
-```r
 station_date_departures
 ```
 
@@ -566,10 +439,6 @@ Trips %>%
               values_from = percent)
 ```
 
-```
-## `summarise()` regrouping output by 'client' (override with `.groups` argument)
-```
-
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["day"],"name":[1],"type":["ord"],"align":["right"]},{"label":["Casual"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Registered"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Sun","2":"0.36132316","3":"0.0591427"},{"1":"Mon","2":"0.02035623","3":"0.1698318"},{"1":"Tue","2":"0.01717557","3":"0.1660336"},{"1":"Wed","2":"0.01081425","3":"0.1654910"},{"1":"Thu","2":"0.02735369","3":"0.3353228"},{"1":"Sat","2":"0.56297710","3":"0.1041780"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -585,7 +454,12 @@ Trips %>%
   20. Below, provide a link to your GitHub page with this set of Weekly Exercises. Specifically, if the name of the file is 03_exercises.Rmd, provide a link to the 03_exercises.md file, which is the one that will be most readable on GitHub.
   
 
-**GitHub Link:** 
+**GitHub Links**
+
+**md File:** https://github.com/kristinbryan/exercise_3/blob/master/03_exercises.md
+
+**Rmd File:** https://github.com/kristinbryan/exercise_3/blob/master/03_exercises.Rmd
+
 
 ## Challenge problem! 
 
